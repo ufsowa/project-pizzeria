@@ -53,6 +53,21 @@ const select = {
   };
 
   const app = {
+    initMenu: function(){
+      const thisApp = this;
+
+      console.log('thisApp.data: ', thisApp.data);
+
+      for ( let product in thisApp.data.products) {
+        new Product(product, thisApp.data.products[product]);
+      }
+    },
+
+    initData: function(){
+      const thisApp = this;
+      thisApp.data = dataSource;
+    },
+
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -60,8 +75,50 @@ const select = {
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+
+      thisApp.initData();
+      thisApp.initMenu();
     },
   };
+
+  class Product {
+    constructor(id, data) {
+      const thisProduct = this;
+      thisProduct.id = id;
+      thisProduct.data = data;      
+      thisProduct.renderInMenu();
+      thisProduct.initAccordion();
+      console.log('new product: ', thisProduct);
+    }
+
+    renderInMenu(){
+      const thisProduct = this;
+      const menuList = document.querySelector(select.containerOf.menu); 
+      const productHTML = templates.menuProduct(thisProduct.data);
+      thisProduct.element = utils.createDOMFromHTML(productHTML); 
+      console.log(thisProduct);
+      //menuList.insertAdjacentHTML('beforeend', productHTML);
+      menuList.appendChild(thisProduct.element);
+    }
+
+    initAccordion(){
+      const thisProduct = this;
+      const productMenu = thisProduct.element.querySelector(select.menuProduct.clickable);
+      productMenu.addEventListener('click', function(event){
+        const clickedElement = this;
+        console.log('clicked element: ', clickedElement);
+        event.preventDefault();
+
+        //restart all products
+        const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
+        for (let activeElement of activeProducts) {
+          activeElement != thisProduct.element ?? activeItem.classList.remove(classNames.menuProduct.wrapperActive);
+        }
+        //active selected product
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+      });
+    }
+  }
 
   app.init();
 }
