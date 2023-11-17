@@ -1,4 +1,4 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+/* global utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
   'use strict';
@@ -112,7 +112,7 @@ const select = {
         //restart all products
         const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
         for (let activeElement of activeProducts) {
-          activeElement != thisProduct.element ?? activeItem.classList.remove(classNames.menuProduct.wrapperActive);
+          activeElement != thisProduct.element && activeElement.classList.remove(classNames.menuProduct.wrapperActive);
         }
         //active selected product
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
