@@ -110,6 +110,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -131,6 +132,7 @@ const select = {
 
     initOrderForm(){
       const thisProduct = this;
+      thisProduct.processOrder(); //  init order
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
@@ -155,20 +157,27 @@ const select = {
       const basePrice = thisProduct.data.price;
       let totalPrice = basePrice;
       console.log('your order: ', basePrice, formData);
-      // check all supported params categories 
+    
+      // iterate over all supported params categories 
       for ( let paramID in thisProduct.data.params) {
-//        console.log('category: ', category, formData.hasOwnProperty(category));
-        if (!Object.prototype.hasOwnProperty.call(formData, paramID)) break;  // missing option category in the form
+        // handle missing option category in the form
+        if (!Object.prototype.hasOwnProperty.call(formData, paramID)) break;
+        //  iterate over all options within category
         for ( let option in thisProduct.data.params[paramID].options) {
-//          console.log('option: ', option, formData[category]);
-            const optionItem = thisProduct.data.params[paramID].options[option];
-            // update total price for
-            if(formData[paramID].includes(option)) { // option is selected
-              if (!optionItem.default) totalPrice += optionItem.price;  // is extra
-//                console.log('added: ', totalPrice, optionItem);
-            } else {                                  // option is not selected 
-              if (optionItem.default) totalPrice -= optionItem.price;  // is default
-//                console.log('removed: ', totalPrice, optionItem);
+          const optionItem = thisProduct.data.params[paramID].options[option];
+          const selectedOption = formData[paramID].includes(option)
+          // update total price when
+          if(selectedOption) {                      // option is selected
+            if (!optionItem.default) totalPrice += optionItem.price;  // is extra
+          } else {                                  // option is not selected 
+            if (optionItem.default) totalPrice -= optionItem.price;  // is default
+          }
+          // update visualization
+          let imageClass = '.' + paramID + '-' + option;
+          const imageElement = thisProduct.imageWrapper.querySelector(imageClass)
+          if (imageElement) {
+            selectedOption ? imageElement.classList.add(classNames.menuProduct.imageVisible) :
+                        imageElement.classList.remove(classNames.menuProduct.imageVisible);
           }
         }
       }
