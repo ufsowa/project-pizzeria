@@ -67,19 +67,15 @@
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    }, // CODE CHANGED
-    // CODE ADDED START
+    },
     cart: {
       defaultDeliveryFee: 20,
     },
-    // CODE ADDED END
   };
   
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-    // CODE ADDED START
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-    // CODE ADDED END
   };
 
   const app = {
@@ -190,6 +186,7 @@
       thisProduct.dom.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCard();
       });
 
       for (let input of thisProduct.dom.formInputs) {
@@ -215,6 +212,7 @@
         for ( let option in thisProduct.data.params[paramID].options) {
           const optionItem = thisProduct.data.params[paramID].options[option];
           const selectedOption = formData[paramID].includes(option)
+          optionItem.selected = selectedOption;     // mark as selected
           // update total price when
           if(selectedOption) {                      // option is selected
             if (!optionItem.default) totalPrice += optionItem.price;  // is extra
@@ -231,9 +229,53 @@
         }
       }
       //  multiply by amount
+      thisProduct.priceSingle = totalPrice;
       totalPrice *= thisProduct.amountWidget.value;
       console.log('Final / base price: ', totalPrice, ' / ', basePrice); 
       thisProduct.dom.priceElem.innerHTML = totalPrice;     
+    }
+
+    prepareCartProductParams() {
+      const thisProduct = this;
+      const selectedParams = {};
+      for ( let paramID in thisProduct.data.params) {
+        if (!Object.prototype.hasOwnProperty.call(selectedParams, paramID)) {
+          selectedParams[paramID] = {
+            label: thisProduct.data.params[paramID].label,
+            options: {},
+          }  
+        }
+        for ( let option in thisProduct.data.params[paramID].options) {
+          const optionItem = thisProduct.data.params[paramID].options[option];
+          if (optionItem.selected){
+            if (!Object.prototype.hasOwnProperty.call(selectedParams[paramID].options, option)) {
+              selectedParams[paramID].options[option] = optionItem.label;
+            } 
+          }
+        }
+      }
+      return selectedParams;
+    }
+
+    addToCard() {
+      const thisProduct = this;
+
+      app.cart.add(thisProduct.prepareProductSummary());
+    }
+
+    prepareProductSummary() {
+      const thisProduct = this;
+
+      const productSummary = {};
+
+      productSummary.id = thisProduct.id;
+      productSummary.name = thisProduct.data.name;
+      productSummary.amount = thisProduct.amountWidget.value;
+      productSummary.priceSingle = thisProduct.priceSingle;
+      productSummary.price = productSummary.priceSingle * productSummary.amount;
+      productSummary.params = thisProduct.prepareCartProductParams();
+
+      return productSummary;
     }
   }
 
@@ -324,6 +366,12 @@
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       })
+    }
+
+    add(product) {
+      //const thisCart = this;
+
+      console.log('Add new product: ', product);
     }
   }
 
