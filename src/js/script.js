@@ -259,13 +259,11 @@
 
     addToCard() {
       const thisProduct = this;
-
       app.cart.add(thisProduct.prepareProductSummary());
     }
 
     prepareProductSummary() {
       const thisProduct = this;
-
       const productSummary = {};
 
       productSummary.id = thisProduct.id;
@@ -351,11 +349,11 @@
 
     getElements(element) {
       const thisCart = this;
-
       thisCart.dom = {};
 
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions() {
@@ -368,10 +366,26 @@
       })
     }
 
-    add(product) {
-      //const thisCart = this;
+    add(productData) {
+      const thisCart = this;
+      console.log('Add new product: ', productData);
+      const product = new cartProduct(productData);
+      product.render(thisCart.dom.productList);
+      thisCart.products.push(product);
+    }
+  }
 
-      console.log('Add new product: ', product);
+  class cartProduct {
+    constructor(productData) {
+      const thisCartProduct = this;
+
+      thisCartProduct.data = productData;
+    }
+
+    render(srcElement) {
+      const thisCartProduct = this;
+      thisCartProduct.element = utils.createDOMFromHTML(templates.cartProduct(thisCartProduct.data));      
+      srcElement.appendChild(thisCartProduct.element);
     }
   }
 
