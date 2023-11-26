@@ -396,7 +396,6 @@
       console.log('remove order: ', removedProduct);
     
       thisCart.products = thisCart.products.filter(function(product) {
-        console.log('check: ', product, removedProduct, product!=removedProduct);
         return product != removedProduct;
       });
       removedProduct.dom.wrapper.remove();
