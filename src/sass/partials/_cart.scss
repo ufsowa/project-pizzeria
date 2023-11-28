@@ -10,13 +10,18 @@
   font-size: $base-size;
   box-shadow: 0 0 $base-size rgba(0, 0, 0, 0.2);
   z-index: 9999;
+  transition: opacity 0.5s;
 
   &.active {
     .cart__content {
       @include accordion-open();
       padding: ($base-size * 1.5) 0 0 0;
     }
+  }
 
+  &.modify {
+    opacity: 0.5;
+    transition: none;
   }
 
   &__summary {
@@ -148,8 +153,12 @@
     input, button {
       width: 100%;
       margin-bottom: calc($base-size / 2);
-    }
+      border: 1px solid lighten($color-dark, 70%);
 
+      &:required {
+        outline-color: $color-main;
+      }
+    }
   }
 
 }
