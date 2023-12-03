@@ -3,6 +3,7 @@ import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import API from './service.js';
 import Navigation from './components/Navigation.js';
+import Booking from './components/Booking.js';
 
 const app = {
   initMenu: function(){
@@ -54,9 +55,11 @@ const app = {
   },
 
   initNavigation: function(){
-    const thisApp = this;
-
     new Navigation();
+  },
+
+  initBooking: function(){
+    new Booking();
   },
 
   init: function(){
@@ -69,6 +72,7 @@ const app = {
     thisApp.initService();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
 }; 
 

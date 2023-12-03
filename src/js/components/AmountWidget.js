@@ -4,11 +4,13 @@ import {select, settings} from '../settings.js';
 class AmountWidget {
     constructor (element){
       const thisWidget = this;
-      thisWidget.element = element;      
+      thisWidget.element = element;
+
+      thisWidget.dom = {};
 
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value ?
-        thisWidget.input.value :
+      thisWidget.setValue(thisWidget.dom.input.value ?
+        thisWidget.dom.input.value :
         settings.amountWidget.defaultValue);
       thisWidget.initActions();
     }
@@ -16,23 +18,31 @@ class AmountWidget {
     getElements(element) {
       const thisWidget = this;
 
-      thisWidget.input = element.querySelector(select.widgets.amount.input);
-      thisWidget.lessBtn = element.querySelector(select.widgets.amount.linkDecrease);
-      thisWidget.moreBtn = element.querySelector(select.widgets.amount.linkIncrease);
+      thisWidget.dom.input = element.querySelector(select.widgets.amount.input);
+      thisWidget.dom.lessBtn = element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.dom.moreBtn = element.querySelector(select.widgets.amount.linkIncrease);
     }
 
     initActions(){
       const thisWidget = this;
 
-      thisWidget.input.addEventListener('change', function(event) {
+      thisWidget.dom.input.addEventListener('change', function(event) {
+        console.log('change: ', event)
         event.preventDefault();
-        thisWidget.setValue(thisWidget.input.value);
+        thisWidget.setValue(thisWidget.dom.input.value);
       });
-      thisWidget.lessBtn.addEventListener('click', function(event){
+      thisWidget.dom.input.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+        console.log('enter: ', event)
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.dom.input.value);
+        }
+      });
+      thisWidget.dom.lessBtn.addEventListener('click', function(event){
         event.preventDefault(); 
         thisWidget.setValue(thisWidget.value - 1);
       });
-      thisWidget.moreBtn.addEventListener('click', function(event) {
+      thisWidget.dom.moreBtn.addEventListener('click', function(event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
       });
@@ -48,7 +58,7 @@ class AmountWidget {
           thisWidget.value = newValue      
       }
 
-      thisWidget.input.value = thisWidget.value;
+      thisWidget.dom.input.value = thisWidget.value;
       thisWidget.announce();
     }
 

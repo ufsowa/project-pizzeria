@@ -1,4 +1,4 @@
-import {settings, select, classNames} from '../settings.js';
+import { select, classNames} from '../settings.js';
 
 class Navigation {
     constructor(){
