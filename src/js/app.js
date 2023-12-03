@@ -2,9 +2,10 @@ import {settings, select} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import API from './service.js';
+import Navigation from './components/Navigation.js';
 
 const app = {
-    initMenu: function(){
+  initMenu: function(){
       const thisApp = this;
 
       console.log('thisApp.data: ', thisApp.data);
@@ -12,9 +13,9 @@ const app = {
       for ( let product in thisApp.data.products) {
         new Product(thisApp.data.products[product].id, thisApp.data.products[product]);
       }
-    },
+  },
 
-    initData: function(){
+  initData: function(){
       const thisApp = this;
       thisApp.data = {};
 
@@ -32,9 +33,9 @@ const app = {
         });
 
         console.log('thisApp.data: ', JSON.stringify(thisApp.data));
-    },
+  },
 
-    initCart: function() {
+  initCart: function(){
       const thisApp = this;
       const cartElement = document.querySelector(select.containerOf.cart);
 
@@ -44,26 +45,32 @@ const app = {
       productListElement.addEventListener('add-to-cart', function(event){
         thisApp.cart.add(event.detail);
       });
-    },
+  },
 
-    initService: function() {
+  initService: function(){
       const thisApp = this;
 
       thisApp.API = new API();
-    },
+  },
 
-    init: function(){
-      const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('settings:', settings);
-  
+  initNavigation: function(){
+    const thisApp = this;
 
-      thisApp.initService();
-      thisApp.initData();
-      thisApp.initCart();
-    },
-  }; 
+    new Navigation();
+  },
+
+  init: function(){
+    const thisApp = this;
+    console.log('*** App starting ***');
+    console.log('thisApp:', thisApp);
+    console.log('settings:', settings);
+
+    thisApp.initNavigation();
+    thisApp.initService();
+    thisApp.initData();
+    thisApp.initCart();
+  },
+}; 
 
 app.init();
 
