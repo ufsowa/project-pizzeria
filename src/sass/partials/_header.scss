@@ -1,13 +1,7 @@
 .header {
-  padding: calc($base-size * 5) 0;
+  padding: calc($base-size * 5) 0 calc($base-size * 8) 0;
   background: $color-dark;
   color: $color-light;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  // position: fixed;
-  // top: 0;
-  // width: 100%;
 
   &__wrapper {
     position: relative;
@@ -36,6 +30,30 @@
     font-size: calc($base-size * 1.5);
     font-weight: $font-light;
     font-style: italic;
+  }
+
+}
+
+.main-nav {
+  position: absolute;
+  @include flex(row, flex-start, flex-start);
+  bottom: calc($base-size * -8);
+
+  a {
+    @extend .h2;
+    color: $color-main;
+    text-decoration: none;
+    margin-right: calc($base-size * 2);
+    text-align: center;
+    padding: $base-size calc($base-size * 2);
+    background: darken($color-dark, 5%);
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+
+    &.active {
+      background: lighten($color-dark, 75%);
+    }
+
   }
 
 }
