@@ -255,5 +255,16 @@
         "starters": ["lemonWater"]
       }
     ],
-    "bookings": []
+    "bookings": [
+      {
+         "id": 2,
+         "date": "2023-12-12",
+         "hour": "16:00",
+         "table": 3,
+         "repeat": false,
+         "duration": 2,
+         "ppl": 3,
+         "starters": ["bread", "lemonWater"]
+       }
+    ]
  }
