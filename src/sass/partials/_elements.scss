@@ -28,6 +28,20 @@
   }
 }
 
+/* Alert elements */
+
+.alert {
+  position: absolute;
+  margin: 0 20px 20px 20px;
+  padding: 15px;
+  top: 0;
+  right: 0;
+  color: black;
+  font-size: $font-bold;
+  border: 2px solid red;
+  background-color: $color-danger;
+}
+
 /* Form elements */
 
 input, select {

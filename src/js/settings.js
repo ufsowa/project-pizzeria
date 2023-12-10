@@ -3,6 +3,7 @@ export const select = {
       menuProduct: '#template-menu-product',
       cartProduct: '#template-cart-product',
       bookingWidget: '#template-booking-widget',
+      alertTpl: '#template-alert',
     },
     containerOf: {
       menu: '#product-list',
@@ -60,13 +61,16 @@ export const select = {
     booking: {
       peopleAmount: '.people-amount',
       hoursAmount: '.hours-amount',
+      room: '.floor-plan',
       tables: '.floor-plan .table',
       form: '.booking-form',
       formSubmit: '.booking-form [type="submit"]',
+      widget: '.booking-widget',
     },
     nav: {
       links: '.main-nav a',
     },
+    alerts: '.alert',
   };
   
 export const classNames = {
@@ -78,8 +82,10 @@ export const classNames = {
       wrapperActive: 'active',
     },
     booking: {
+      table: 'table',
       loading: 'loading',
       tableBooked: 'booked',
+      tableSelected: 'selected',
     },
     nav: {
       active: 'active',
@@ -125,4 +131,5 @@ export const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
     bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
+    alertTpl: Handlebars.compile(document.querySelector(select.templateOf.alertTpl).innerHTML),
   };
