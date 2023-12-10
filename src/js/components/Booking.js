@@ -47,6 +47,10 @@ class Booking {
         thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
         thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker)
 
+        thisBooking.duration = thisBooking.hoursAmountWidget.value;
+        thisBooking.date = thisBooking.datePicker.value;
+        thisBooking.hour = thisBooking.hourPicker.value;
+
         thisBooking.dom.peopleAmount.addEventListener('updated', function(){
             console.log('update people')
         });
@@ -59,8 +63,15 @@ class Booking {
             console.log('select date')
         });
 
+        thisBooking.dom.hourPicker.addEventListener('updated',  function(){
+            console.log('select hour')
+        });
+
         thisBooking.dom.container.addEventListener('updated',  function(){
             console.log('booking updated');
+            thisBooking.duration = thisBooking.hoursAmountWidget.value;
+            thisBooking.date = thisBooking.datePicker.value;
+            thisBooking.hour = thisBooking.hourPicker.value;
             thisBooking.updateDOM();
         });
     }
@@ -171,7 +182,7 @@ class Booking {
             if(!thisBooking.booked[date][hourBlock]){
                 thisBooking.booked[date][hourBlock] = [];
             }
-            if(thisBooking.booked[date][hourBlock].includes(table)){
+            if(thisBooking.checkHourBooked(date,hourBlock,table)){
                 console.warn('Table over booked for:\n', table, date, hourBlock);
                 console.log(thisBooking.booked)
             }
@@ -179,33 +190,78 @@ class Booking {
         }
     }
 
-    updateDOM(){
+    checkHourBooked(date, hour, table = undefined){
         const thisBooking = this;
 
-        thisBooking.date = thisBooking.datePicker.value;
-        thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+        console.log('check: ', date, hour, table);
+
+        if(!thisBooking.booked[date]){
+            console.log('true date')
+            return false;
+        }
+
+        if(!thisBooking.booked[date][hour]){
+            console.log('true hour')
+            return false;
+        }
+
+        if(!table){
+            return true;
+        } else {
+            if(thisBooking.booked[date][hour].includes(table)){
+                console.log('true table')
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    checkTimeRangeBooked(date, startHour, duration, table = undefined){
+        const thisBooking = this;
+
+        for (let block = 0; block < duration; block++){
+            let hour = startHour + block*0.5; 
+            if(thisBooking.checkHourBooked(date,hour,table)){
+                console.log('range occupied', date, hour, table);
+                return true
+            }
+        }
+        console.log('range free');
+        return false;
+    }
+
+    updateDOM(){
+        const thisBooking = this;
+        console.log('update booking');
+        const date = thisBooking.date;
+        const startHour = utils.hourToNumber(thisBooking.hour);
+        const duration = thisBooking.duration;
 
         let allAvailable = false;
-
-        if(!thisBooking.booked[thisBooking.date] || !thisBooking.booked[thisBooking.date][thisBooking.hour]){
+        
+        if(!thisBooking.checkTimeRangeBooked(date, startHour, duration)){
             allAvailable = true;
         }
+        console.log('available: ', allAvailable);
 
         for(let table of thisBooking.dom.tables){
             let tableId = table.getAttribute(settings.booking.tableIdAttribute);
             if(!isNaN(tableId)){
                 tableId = parseInt(tableId);
             }
-            console.log('check table:', table, thisBooking.date, thisBooking.hour);
+            console.log('check table:', tableId, thisBooking.date, startHour, duration);
             if(!allAvailable
                 &&
-                thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)
+                thisBooking.checkTimeRangeBooked(date, startHour, duration, tableId)
             ){
                 table.classList.add(classNames.booking.tableBooked);
             } else {
                 table.classList.remove(classNames.booking.tableBooked);
             }
         }
+
+        console.log('reserved: ', thisBooking.booked);
     }
 
 }
