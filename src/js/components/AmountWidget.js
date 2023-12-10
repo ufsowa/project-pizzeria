@@ -33,7 +33,6 @@ class AmountWidget extends BaseWidget {
       });
       thisWidget.dom.input.addEventListener('keyup', function(event) {
         if (event.key === 'Enter') {
-        console.log('enter: ', event)
         event.preventDefault();
         thisWidget.setValue(thisWidget.dom.input.value);
         }

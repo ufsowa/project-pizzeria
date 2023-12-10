@@ -24,15 +24,19 @@ class Alert {
     }
 
     initActions(){
-        window.addEventListener('click', function(event){
-            event.preventDefault();
-            const alertsElements = document.querySelectorAll(select.alerts);
-
-            for(let alertNode of alertsElements){
-                alertNode.parentNode.removeChild(alertNode);
-            }
-        });
+        window.addEventListener('click', closeAlert);
     }
+}
+
+function closeAlert(){
+
+    const alertsElements = document.querySelectorAll(select.alerts);
+    console.log('window click');
+    for(let alertNode of alertsElements){
+        alertNode.parentNode.removeChild(alertNode);
+    }
+    window.removeEventListener('click', closeAlert);
+    console.log('alert removed');
 }
 
 export default Alert;

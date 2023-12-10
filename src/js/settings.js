@@ -59,13 +59,15 @@ export const select = {
       remove: '[href="#remove"]',
     },
     booking: {
+      widget: '.booking-widget',
       peopleAmount: '.people-amount',
       hoursAmount: '.hours-amount',
       room: '.floor-plan',
       tables: '.floor-plan .table',
       form: '.booking-form',
       formSubmit: '.booking-form [type="submit"]',
-      widget: '.booking-widget',
+      options: '.booking-options',
+      orderConfirm: '.order-confirmation',
     },
     nav: {
       links: '.main-nav a',

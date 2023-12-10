@@ -55,6 +55,7 @@ class Table {
         }
         console.log('render selected')
         thisTable.render();
+        thisTable.confirmSelected();
     }
 
     get selected(){
@@ -81,6 +82,18 @@ class Table {
         }
     }
 
+    confirmSelected(){
+        const thisTable = this;
+
+        const updateEvent = new CustomEvent('selectedUpdated', {
+            bubbles: true,
+            detail: {
+                tableId: thisTable.id,
+                selected: thisTable.selected,
+            },
+        });
+        thisTable.dom.wrapper.dispatchEvent(updateEvent);
+    }
 }
 
 export function parseTableId(htmlElement){
