@@ -49,7 +49,17 @@ const app = {
   },
 
   initNavigation: function(){
-    new Navigation();
+    const thisApp = this;
+
+    thisApp.navItem = new Navigation();
+  
+    const homePageElement = document.querySelector(select.containerOf.homePage);
+    console.log('init navigation: ',homePageElement);
+    
+    homePageElement.addEventListener('redirect', function(event){
+      console.log(event.detail);
+      thisApp.navItem.activatePage(event.detail.pageId);
+    });
   },
 
   initBooking: function(){

@@ -71,6 +71,9 @@ export const select = {
       options: '.booking-options',
       orderConfirm: '.order-confirmation',
     },
+    homePage: {
+      links: '.home__links > a'
+    },
     nav: {
       links: '.main-nav a',
     },

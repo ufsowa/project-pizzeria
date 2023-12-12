@@ -31,8 +31,6 @@ class Navigation {
 
                 const pageId = clickedElement.getAttribute('href').replace('#', '');
                 thisNav.activatePage(pageId);
-
-                window.location.hash = '#/' + pageId;
             });
         }
     }
@@ -49,8 +47,7 @@ class Navigation {
         if(thisNav.pages.includes(pageIdFromHash)){
             thisNav.activatePage(pageIdFromHash);
         } else {
-            thisNav.activatePage(defaultPageId);
-            window.location.hash = '#/' + defaultPageId;      
+            thisNav.activatePage(defaultPageId);  
         }
     }
 
@@ -66,6 +63,8 @@ class Navigation {
             link.classList.toggle(classNames.nav.active,
                 link.getAttribute('href') === '#' + pageId);
         }
+
+        window.location.hash = '#/' + pageId;    
     }
 }
 
