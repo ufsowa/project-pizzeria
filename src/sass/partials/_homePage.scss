@@ -52,5 +52,44 @@
         width: 100%;
         background-color: $color-main;
     }
+
+    &__carousel {
+
+        .comment-wrapper {
+            @include flex(row, center, space-between);
+            min-height: 250px;
+            padding: 0 5px;
+
+            .image-box {
+                flex: 1 1 40%;
+//                max-width: 250px;
+                height: 100%;
+                overflow: hidden;
+                left: 0;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .comment-text {
+                @include flex(column, left, space-between);
+                flex: 1 1 60%;
+                padding: 15px;
+                text-align: left;
+            }
+
+            .li {
+                list-style-type: square;
+            }
+            
+            .author {
+                margin-top: 5px;
+            }
+        }
+
+    }
     
 }

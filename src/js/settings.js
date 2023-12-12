@@ -72,7 +72,8 @@ export const select = {
       orderConfirm: '.order-confirmation',
     },
     homePage: {
-      links: '.home__links > a'
+      links: '.home__links > a',
+      carousel: '.main-carousel',
     },
     nav: {
       links: '.main-nav a',

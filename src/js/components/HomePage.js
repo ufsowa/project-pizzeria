@@ -10,6 +10,7 @@ class HomePage{
         thisPage.render();
         thisPage.initElements();
         thisPage.initActions();
+        thisPage.initCarusel();
 
         console.log("*** init landing page ***");
         console.log(thisPage);
@@ -28,6 +29,7 @@ class HomePage{
         const thisPage = this;
 
         thisPage.dom.links = thisPage.dom.container.querySelectorAll(select.homePage.links);
+        thisPage.dom.carousel = thisPage.dom.container.querySelector(select.homePage.carousel);
     }
 
     initActions(){
@@ -52,6 +54,21 @@ class HomePage{
                 console.log(clickedElement);
             });
         }
+    }
+
+    initCarusel(){
+        const thisPage = this;
+
+        const carouselElement = thisPage.dom.carousel;
+
+        console.log('carousel: ', carouselElement);
+      //  eslint-disable-next-line no-undef
+        new Flickity(carouselElement, {
+            cellAlign: 'center',
+            contain: true,
+            autoPlay: 3000,
+        })
+
     }
 }
 
