@@ -4,19 +4,10 @@ import Cart from './components/Cart.js';
 import API from './service.js';
 import Navigation from './components/Navigation.js';
 import Booking from './components/Booking.js';
+import HomePage from './components/HomePage.js';
 
 const app = {
   initMenu: function(){
-      const thisApp = this;
-
-      console.log('thisApp.data: ', thisApp.data);
-
-      for ( let product in thisApp.data.products) {
-        new Product(thisApp.data.products[product].id, thisApp.data.products[product]);
-      }
-  },
-
-  initData: function(){
       const thisApp = this;
       thisApp.data = {};
 
@@ -30,7 +21,10 @@ const app = {
           console.log('parsedResponse:', parsedResponse);
         
           thisApp.data.products = parsedResponse;
-          thisApp.initMenu();
+
+          for ( let product in thisApp.data.products) {
+            new Product(thisApp.data.products[product].id, thisApp.data.products[product]);
+          }
         });
 
         console.log('thisApp.data: ', JSON.stringify(thisApp.data));
@@ -62,6 +56,10 @@ const app = {
     new Booking();
   },
 
+  initHomePage(){
+    new HomePage();
+  },
+
   init: function(){
     const thisApp = this;
     console.log('*** App starting ***');
@@ -70,7 +68,8 @@ const app = {
 
     thisApp.initNavigation();
     thisApp.initService();
-    thisApp.initData();
+    thisApp.initHomePage();
+    thisApp.initMenu();
     thisApp.initCart();
     thisApp.initBooking();
   },

@@ -1,0 +1,56 @@
+.home {
+    margin: ($base-size * 3.5) auto;
+    padding: ($base-size * 6) ($base-size * 4);
+    background: $color-light;
+    border-bottom: 1px solid lighten($color-dark, 70%);
+    border-radius: $radius;
+    
+    &__header {
+        @include flex(column, center, space-between);
+        gap: 5px;
+        margin-top: calc($base-size * 2);
+        margin-bottom: calc($base-size * 2);
+
+        h1 {
+            @extend .h1;
+            color: $color-light;
+            margin-bottom: 0;
+        }
+        
+        h2 {
+            @extend .h2;
+            color: $color-light;            
+        }
+    }
+
+    &__links {
+        cursor: pointer;
+        @include flex(row, stretch, space-between);
+        gap: 5px;
+        height: 200px;
+        width: 100%;
+
+        a {
+            @include flex(row, center,center);
+            flex: 1 1 45%;
+            background-position: center;
+            text-decoration: none;
+        }
+
+        .link-menu {
+            background-image: url("/images/home/pizza-1.jpg");
+        }
+
+        .link-booking {
+            background-image: url("/images/home/pizza-2.jpg");
+        }
+    }
+
+    &__info {
+        @include flex(column, center, center);
+        height: 200px;
+        width: 100%;
+        background-color: $color-main;
+    }
+    
+}

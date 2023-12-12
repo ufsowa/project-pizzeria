@@ -21,6 +21,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -62,6 +63,9 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div id="home-page" class="home-page container"></div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
@@ -96,6 +100,31 @@
         <li><a href="#remove">Remove<i class="fas fa-trash-alt"></i></a></li>
       </ul>
     </li>
+  </script>
+
+  <script id="template-home-page" type="text/x-handlebars-template">
+    <article class="home">
+      <div class="home__header">
+        <div class="home__links">
+     
+            <a href="#menu" class="link-menu"><h1>Order online</h1></a>
+        
+     
+            <a href="#booking" class="link-booking"><h1>Book a table</h1></a>
+  
+        </div>
+        <div class="home__info">
+          <h1>Openning hours:</h1>
+          <h2>TUE-SUN, 12PM - 12AM</h2>
+        </div>
+      </div>
+      <div class="home__carusel">
+      </div>
+      <div class="home__galery">
+        <div class="image-list"></div>
+      </div>
+      <div class="home__footer"></div>
+    </article>
   </script>
 
   <script id="template-menu-product" type="text/x-handlebars-template">
