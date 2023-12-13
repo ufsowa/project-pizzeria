@@ -21,6 +21,14 @@
             @extend .h2;
             color: $color-light;            
         }
+
+        h3 {
+            font-size: 0px;
+            color: $color-light;
+            font-style: italic;
+            font-family: $font-text;
+            transform: translateY(+50px);
+        }
     }
 
     &__links {
@@ -31,10 +39,18 @@
         width: 100%;
 
         a {
-            @include flex(row, center,center);
+            @include flex(column, center,center);
             flex: 1 1 45%;
             background-position: center;
             text-decoration: none;
+
+            &:hover h3 {
+                display: block;
+                font-size: 15px;
+                transform: translateY(0px);
+                transition: all 1s;
+
+            }
         }
 
         .link-menu {
@@ -54,6 +70,8 @@
     }
 
     &__carousel {
+        margin-top: 125px;
+        margin-bottom: 125px;
 
         .comment-wrapper {
             @include flex(row, center, space-between);
@@ -68,11 +86,7 @@
                 left: 0;
             }
 
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+
 
             .comment-text {
                 @include flex(column, left, space-between);
@@ -90,6 +104,68 @@
             }
         }
 
+    }
+
+    &__galery {
+        margin-bottom: 50px;
+        .image-list {
+            @include flex(row, center, space-between);
+            flex-wrap: wrap;
+            gap: 7px;
+
+            .image-box {
+                position: relative;
+                flex: 0 0 32%;
+                height: 200px;
+                cursor: pointer;
+
+                &::after {
+                    content: " ";
+                    z-index: 8888;
+                    display: none;
+                    position: absolute;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    background-color: $color-dark;
+                    opacity: 0.3;
+                }
+
+                &:hover {
+                    &::after{
+                        display: block;
+                        transition: all 2s;
+                    }
+
+                    .image-options {
+                        display: block;
+                    }
+                }
+            }
+
+            .image-options {
+                display: none;
+                @include center();
+                letter-spacing: 5px;
+                z-index: 9999;
+            }
+        }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    i {
+        font-size: 25px;
+        color: $color-light;
+
+        &:hover{
+            color: $color-main;
+        }
     }
     
 }
