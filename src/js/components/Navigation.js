@@ -10,8 +10,6 @@ class Navigation {
         thisNav.getElements();
         thisNav.initPages();
         thisNav.initActions();
-
-        console.log('Nav: ', thisNav);
     }
 
     getElements(){
@@ -53,7 +51,6 @@ class Navigation {
 
     activatePage(pageId){
         const thisNav = this;
-        console.log('Activate: ', pageId);
 
         for(let page of thisNav.dom.pages){
             page.classList.toggle(classNames.pages.active, page.id === pageId);

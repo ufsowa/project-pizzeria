@@ -11,9 +11,6 @@ class HomePage{
         thisPage.initElements();
         thisPage.initActions();
         thisPage.initCarusel();
-
-        console.log("*** init landing page ***");
-        console.log(thisPage);
     }
 
     render(){
@@ -50,8 +47,6 @@ class HomePage{
                 })
 
                 thisPage.dom.container.dispatchEvent(redirectEvent);
-
-                console.log(clickedElement);
             });
         }
     }
@@ -60,8 +55,6 @@ class HomePage{
         const thisPage = this;
 
         const carouselElement = thisPage.dom.carousel;
-
-        console.log('carousel: ', carouselElement);
       //  eslint-disable-next-line no-undef
         new Flickity(carouselElement, {
             cellAlign: 'center',

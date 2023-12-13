@@ -15,8 +15,6 @@ import AmountWidget from './AmountWidget.js'
       thisCartProduct.getElements(productElement);
       thisCartProduct.initAmoutWidget();
       thisCartProduct.initActions();
-
-      console.log('Cart product: ', thisCartProduct);
     }
 
     getElements(element) {
@@ -39,8 +37,6 @@ import AmountWidget from './AmountWidget.js'
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
-
-        console.log(thisCartProduct);
       })
     }
 
@@ -53,7 +49,6 @@ import AmountWidget from './AmountWidget.js'
       });
       thisCartProduct.dom.edit.addEventListener('click', function(event){
         event.preventDefault();
-        console.log('edit');
       })
     }
 

@@ -53,7 +53,6 @@ class Table {
         } else {
             thisTable._selected = value;
         }
-        console.log('render selected')
         thisTable.render();
         thisTable.confirmSelected();
     }
@@ -74,10 +73,8 @@ class Table {
         }
 
         if(thisTable.selected){
-            console.log('add style: ', classNames.booking.tableSelected)
             thisTable.dom.wrapper.classList.add(classNames.booking.tableSelected);
         } else {
-            console.log('del style: ', classNames.booking.tableSelected)
             thisTable.dom.wrapper.classList.remove(classNames.booking.tableSelected);
         }
     }

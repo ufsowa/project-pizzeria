@@ -17,17 +17,13 @@ const app = {
         .then(function(rawResponse){
           return rawResponse.json();
         })
-        .then(function(parsedResponse){
-          console.log('parsedResponse:', parsedResponse);
-        
+        .then(function(parsedResponse){        
           thisApp.data.products = parsedResponse;
 
           for ( let product in thisApp.data.products) {
             new Product(thisApp.data.products[product].id, thisApp.data.products[product]);
           }
         });
-
-        console.log('thisApp.data: ', JSON.stringify(thisApp.data));
   },
 
   initCart: function(){
@@ -54,10 +50,8 @@ const app = {
     thisApp.navItem = new Navigation();
   
     const homePageElement = document.querySelector(select.containerOf.homePage);
-    console.log('init navigation: ',homePageElement);
     
     homePageElement.addEventListener('redirect', function(event){
-      console.log(event.detail);
       thisApp.navItem.activatePage(event.detail.pageId);
     });
   },

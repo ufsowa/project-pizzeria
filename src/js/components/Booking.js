@@ -10,8 +10,6 @@ class Booking {
     constructor(){
         const thisBooking = this;
 
-        console.log(thisBooking)
-
         thisBooking.dom = {};
         thisBooking.tables = [];
         thisBooking.selectedTableId = undefined;
@@ -22,9 +20,6 @@ class Booking {
 
         thisBooking.render();
         thisBooking.getData();
-
-        console.log('*** Booking initiated ***');
-        console.log(thisBooking);
     }
 
     render(){
@@ -79,8 +74,6 @@ class Booking {
             }
 
             thisBooking.selectedTableId = parseTableId(clickedElement);
-            console.log('selected: ', thisBooking.selectedTableId);
-
             thisBooking.updateSelectedDOM(thisBooking.selectedTableId);
         });
 
@@ -91,7 +84,6 @@ class Booking {
             if(thisBooking.selectedTableId === clickedTableId) {
                 thisBooking.selectedTableId = selected ? clickedTableId : undefined;
             }
-            console.log('mark as selected: ', clickedTableId, selected, thisBooking.selectedTableId);
         });
 
     }
@@ -100,7 +92,6 @@ class Booking {
         const thisBooking = this;
 
         for(let table of thisBooking.tables){
-            console.log('table: ',table.reserved, table)
             if(table.id === selectedTableId){
                 table.selected = true;
             } else {
@@ -122,24 +113,7 @@ class Booking {
         thisBooking.hour = thisBooking.hourPicker.value;
         thisBooking.ppl = thisBooking.peopleAmountWidget.value;
 
-        thisBooking.dom.peopleAmount.addEventListener('updated', function(){
-            console.log('update people')
-        });
-
-        thisBooking.dom.hoursAmount.addEventListener('updated', function(){
-            console.log('update hours')
-        });
-
-        thisBooking.dom.datePicker.addEventListener('updated',  function(){
-            console.log('select date')
-        });
-
-        thisBooking.dom.hourPicker.addEventListener('updated',  function(){
-            console.log('select hour')
-        });
-
         thisBooking.dom.container.addEventListener('updated',  function(){
-            console.log('booking updated');
             thisBooking.duration = thisBooking.hoursAmountWidget.value;
             thisBooking.date = thisBooking.datePicker.value;
             thisBooking.hour = thisBooking.hourPicker.value;
@@ -187,18 +161,13 @@ class Booking {
             event.stopPropagation();
             const clickedElement = event.target;
   
-            console.log('update confirm: ', event);
-
             if(    clickedElement.tagName === 'INPUT'){
-                console.log('type: ', clickedElement.name);
                 if(clickedElement.name === 'address')
                     thisBooking.address = clickedElement.value;
             
                 if(clickedElement.name === 'phone')
                     thisBooking.phone = clickedElement.value;   
             }
-
-            console.log('booking: ',thisBooking)
         });
 
 
@@ -209,7 +178,6 @@ class Booking {
             const clickedElement = event.target;
 
             if(clickedElement.tagName === 'BUTTON'){
-                console.log('send booking: ', event);
                 thisBooking.sendBooking();
             }
         });
@@ -219,7 +187,6 @@ class Booking {
         const thisBooking = this;
 
         if(!thisBooking.selectedTableId){
-            console.log('Alert no table selectes')
             thisBooking.dom.widget.appendChild(new Alert('Table was not selected'));
             return;
         }
@@ -330,10 +297,6 @@ class Booking {
 
         thisBooking.booked = {};
 
-        console.log('bookings: ', bookings)
-        console.log('events: ', eventsCurrent)
-        console.log('repeats: ', eventsRepeat)
-
         for (let item of bookings){
             thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
         }
@@ -344,14 +307,11 @@ class Booking {
         const maxDate = thisBooking.datePicker.maxDate;
         for (let item of eventsRepeat){
             if(item.repeat == 'daily'){
-                console.log('repeat for: ', item);
                 for(let loopDate = minDate; loopDate <= maxDate; loopDate=utils.addDays(loopDate, 1)){
                     thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
                 }
             }
         }
-        console.log(thisBooking.booked);
-
     }
 
     makeBooked(date, hour, duration, table){
@@ -379,15 +339,11 @@ class Booking {
     checkHourBooked(date, hour, table = undefined){
         const thisBooking = this;
 
-     //   console.log('check: ', date, hour, table);
-
         if(!thisBooking.booked[date]){
-    //       console.log('true date')
             return false;
         }
 
         if(!thisBooking.booked[date][hour]){
-    //        console.log('true hour')
             return false;
         }
 
@@ -395,7 +351,6 @@ class Booking {
             return true;
         } else {
             if(thisBooking.booked[date][hour].includes(table)){
-    //            console.log('true table')
                 return true;
             } else {
                 return false;
@@ -409,17 +364,14 @@ class Booking {
         for (let block = 0; block < duration; block++){
             let hour = startHour + block*0.5; 
             if(thisBooking.checkHourBooked(date,hour,table)){
-                console.log('range occupied', date, hour, table);
                 return true
             }
         }
-        console.log('range free');
         return false;
     }
 
     updateDOM(){
         const thisBooking = this;
-        console.log('update booking');
         const date = thisBooking.date;
         const startHour = utils.hourToNumber(thisBooking.hour);
         const duration = thisBooking.duration;
@@ -429,10 +381,8 @@ class Booking {
         if(!thisBooking.checkTimeRangeBooked(date, startHour, duration)){
             allAvailable = true;
         }
-        console.log('available: ', allAvailable);
 
         for(let table of thisBooking.tables){
-            console.log('check table:', table.id, thisBooking.date, startHour, duration);
             if(!allAvailable
                 &&
                 thisBooking.checkTimeRangeBooked(date, startHour, duration, table.id)
@@ -442,8 +392,6 @@ class Booking {
                 table.reserved = false;
             }
         }
-
-        console.log('reserved: ', thisBooking.booked);
     }
 
 }
